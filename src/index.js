@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { applyMiddleware, combineReducers, createStore } from 'redux';
+import { createLogger } from 'redux-logger';
+import axios from 'axios';
+import thunk from 'redux-thunk';
 import userReducer from './userReducer.js'
 import animalReducer from './animalReducer.js'
 import './index.css';
@@ -9,27 +12,11 @@ const reducers = combineReducers({
 	user: userReducer,
 	animal: animalReducer
 })
-// curried function
-const logger = (store) => (next) => (action) => {
-	console.log('action', action)
-	// if change action type, then the next dispatch will call CHANGE_NAME instead of AGE
-	action.type = 'CHANGE_NAME';
-	next(action)
-}
-
-const error = (store) => (next) => (action) => {
-	// try {
-	// 	next(action);
-	// } catch (e) {
-	// 	console.log('error::', e)
-	// }
-
-}
 
 
-const middleware = applyMiddleware(logger, error);
+const middleware = applyMiddleware(thunk, createLogger());
 
-const store = createStore(reducers, {}, middleware);
+const store = createStore(reducers, middleware);
 
 
 store.subscribe(() => {
@@ -43,7 +30,18 @@ store.dispatch({ type: 'CHANGE_AGE', payload: 35 });
 store.dispatch({ type: 'CHANGE_AGE', payload: 5 });
 store.dispatch({ type: 'CHANGE_AGE', payload: 55 });
 store.dispatch({ type: 'CHANGE_AGE', payload: 3 });
-store.dispatch({ type: 'ERROR' });
+// store.dispatch({ type: 'ERROR' });
+// async call
+store.dispatch((dispatch) => {
+	dispatch({ type: 'FETCH_USERS_START' });
+	axios.get('https://jsonplaceholder.typicode.com/users')
+		.then((response) => {
+			dispatch({ type: 'RECEIVE_USERS', payload: response.data })
+		})
+		.catch((err) => {
+			dispatch({ type: 'FETCH_USERS_ERROR', payload: err })
+		})
+})
 
 
 class App extends React.Component {
@@ -58,3 +56,5 @@ class App extends React.Component {
 
 ReactDOM.render(
 	<App user='toto' />, document.getElementById('root'));
+
+	//https://www.youtube.com/watch?v=Td-2D-_7Y2E
