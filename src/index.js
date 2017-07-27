@@ -3,16 +3,18 @@ import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import './index.css';
 
-const reducer = function (state, action) {
+const userReducer = function (state, action) {
 	if (action.type === 'INC') {
-		return state + action.payload;
+		const newState = Object.assign({}, state, { user: { age: state.user.age + action.payload } })
+		return newState;
 	} else if (action.type === 'DEC') {
-		return state - action.payload;
+		const newState = Object.assign({}, state, { user: { age: state.user.age - action.payload } })
+		return newState;
 	}
 	return state;
 }
 
-const store = createStore(reducer, {
+const store = createStore(userReducer, {
 	user: {
 		name: 'jo',
 		age: 56
