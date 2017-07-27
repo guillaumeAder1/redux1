@@ -7,6 +7,9 @@ const userReducer = (state = {}, action) => {
 		case 'CHANGE_AGE':
 			state = { ...state, age: action.payload }
 			break;
+		case 'ERROR':
+			throw new Error('Reducer TYPE == ERROR ');
+			break;
 		default:
 			break;
 	}
