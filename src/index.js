@@ -1,31 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
 import userReducer from './userReducer.js'
+import animalReducer from './animalReducer.js'
 import './index.css';
 
-// const userReducer = function (state, action) {
-// 	if (action.type === 'INC') {
-// 		const newState = Object.assign({}, state, { user: { age: state.user.age + action.payload } })
-// 		return newState;
-// 	} else if (action.type === 'DEC') {
-// 		const newState = Object.assign({}, state, { user: { age: state.user.age - action.payload } })
-// 		return newState;
-// 	}
-// 	return state;
-// }
-
-
-const store = createStore(userReducer, {
-	user: {
-		name: 'jo',
-		age: 56
-	},
-	animal: {
-		name: 'skye',
-		type: 'dog'
-	}
+const reducers = combineReducers({
+	user: userReducer,
+	animal: animalReducer
 })
+
+const store = createStore(reducers);
 
 
 store.subscribe(() => {
@@ -33,10 +18,9 @@ store.subscribe(() => {
 })
 
 
-store.dispatch({ type: 'INC', payload: 1 });
-store.dispatch({ type: 'INC', payload: 11 });
-store.dispatch({ type: 'INC', payload: 5 });
-store.dispatch({ type: 'DEC', payload: 10 });
+store.dispatch({ type: 'CHANGE_NAME', payload: 'Mark' });
+store.dispatch({ type: 'CHANGE_AGE', payload: 35 });
+
 
 class App extends React.Component {
 	render() {
