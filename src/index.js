@@ -45,7 +45,7 @@ import store from './store.js';
 
 
 ReactDOM.render(<Provider store={store}>
-	<Layout toto='toto' />
+	<Layout datastore={store} toto='toto' />
 </Provider>, document.getElementById('root'));
 
 	//https://www.youtube.com/watch?v=Td-2D-_7Y2E
