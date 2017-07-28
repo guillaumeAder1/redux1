@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 
 import { getUsersList } from '../actions/userActions.js'
 import { getAnimalsList } from '../actions/animalActions.js'
-import { getBikesList } from '../actions/bikesActions.js'
+import * as bikeActions from '../actions/bikesActions.js'
 
 import SelectabeList from './selectableList.js'
+import EsriMapComponent from './esriMap.js'
 
-import { Map, Layers, Graphic, Symbols, Geometry } from 'react-arcgis';
 
 // function mapStateToProps(state) {
 // 	return { todos: state.todos };
@@ -30,7 +30,7 @@ function mapStateToProps(state) {
 
 
 
-class Layout extends React.Component {
+class Layout extends React.Component {	
 
 	getUsers() {
 		this.props.dispatch(getUsersList());
@@ -41,52 +41,14 @@ class Layout extends React.Component {
 		this.bikesList();
 	}
 	bikesList() {
-		this.props.dispatch(getBikesList());
+		this.props.dispatch(bikeActions.getBikesList());
+	}
+	onSelectList = (val) => {		
+		console.log(val);
+		this.props.dispatch(bikeActions.selectStation(val))
 	}
 
-
-
-	render() {
-		// const titanic = (
-		// 	<Graphic>
-		// 		<Symbols.SimpleMarkerSymbol
-		// 			symbolProperties={{
-		// 				color: [191, 29, 14],
-		// 				outline: {
-		// 					color: [46, 46, 46],
-		// 					width: 1
-		// 				}
-		// 			}}
-		// 		/>
-		// 		<Geometry.Point
-		// 			geometryProperties={{
-		// 				latitude: 53.3498,
-		// 				longitude: -6.2603
-		// 			}}
-		// 		/>
-		// 	</Graphic>
-		// );
-		const bikesGraphics = this.props.data.bikesData.list.map((item, i) => {
-			return (
-				<Graphic key={i}>
-					<Symbols.SimpleMarkerSymbol
-						symbolProperties={{
-							color: [217, 118, 116, 0.6],
-							outline: {
-								color: [255, 255, 255],
-								width: 1
-							}
-						}}
-					/>
-					<Geometry.Point
-						geometryProperties={{
-							latitude: item.position.lat,
-							longitude: item.position.lng
-						}}
-					/>
-				</Graphic>
-			);
-		})
+	render() {		
 
 		const bikesList = this.props.data.bikesData.list.map((item, i) => {
 			return item;
@@ -95,20 +57,10 @@ class Layout extends React.Component {
 			<div className="row">
 				<h1>{this.props.appTitle}</h1>
 				<div className="col-sm-2">
-					<SelectabeList name='Dublin station' list={bikesList} />
+					<SelectabeList onSelect={this.onSelectList}  name='Dublin station' list={bikesList} />
 				</div>
 				<div className="col-sm-10">
-					<Map
-						style={{ width: '100%', height: '80vh' }}
-						mapProperties={{ basemap: 'gray' }}
-						viewProperties={{
-							center: [-6.2603, 53.3498],
-							zoom: 12
-						}}>
-						<Layers.GraphicsLayer>
-							{bikesGraphics}
-						</Layers.GraphicsLayer>
-					</Map>
+					<EsriMapComponent selection={this.props.data.bikesData.selectedStation} list={this.props.data.bikesData.list} />
 				</div>
 			</div >
 		)

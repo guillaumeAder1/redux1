@@ -4,6 +4,7 @@ export default class SelectableList extends React.Component {
 
 	selectStation(index) {
 		console.log(this.props.list[index]);
+		this.props.onSelect(this.props.list[index]);
 	}
 
 	render() {

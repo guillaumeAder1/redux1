@@ -12,3 +12,12 @@ export function getBikesList() {
 			});
 	}
 }
+
+export function selectStation(station) {
+	return {
+		type: 'SELECT_STATION',
+		payload: {
+			station: station
+		}
+	};
+}
