@@ -1,12 +1,20 @@
 
-const animalReducer = (state = {}, action) => {
-	// if (action.type === 'INC') {
-	// 	const newState = Object.assign({}, state, { user: { age: state.user.age + action.payload } })
-	// 	return newState;
-	// } else if (action.type === 'DEC') {
-	// 	const newState = Object.assign({}, state, { user: { age: state.user.age - action.payload } })
-	// 	return newState;
-	// }
+const defaultValues = {
+	list: [],
+	selected: false
+}
+
+const animalReducer = (state = defaultValues, action) => {
+	switch (action.type) {
+		case 'FETCH_ANIMALS':
+			state = { ...state, list: action.payload.animals.animals }
+			break;
+		case 'SELECT_ANIMAL':
+			state = { ...state, selected: action.payload }
+			break;
+		default:
+			break;
+	}
 	return state;
 }
 

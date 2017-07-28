@@ -1,0 +1,7 @@
+{
+    "animals": [
+        { "name": "Skype", "type": "dog" },
+        { "name": "Karma", "type": "cat" },
+        { "name": "Josh", "type": "kid" }
+    ]
+}

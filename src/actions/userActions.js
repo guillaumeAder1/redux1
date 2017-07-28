@@ -8,6 +8,6 @@ export function getUsersList() {
 			})
 			.catch((err) => {
 				dispatch({ type: 'FETCH_USERS_ERROR', payload: err })
-			})
+			});
 	}
 }
