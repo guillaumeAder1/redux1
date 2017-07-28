@@ -5,6 +5,9 @@ import { getUsersList } from '../actions/userActions.js'
 import { getAnimalsList } from '../actions/animalActions.js'
 import { getBikesList } from '../actions/bikesActions.js'
 
+
+import { Map } from 'react-arcgis';
+
 // function mapStateToProps(state) {
 // 	return { todos: state.todos };
 // }
@@ -42,6 +45,8 @@ class Layout extends React.Component {
 			<div>
 				<h1>{this.props.appTitle}</h1>
 				<button onClick={() => this.getUsers()}>get Users</button>
+				<Map style={{ width: '150px', height: '150px' }}
+					mapProperties={{ basemap: 'satellite' }} />
 			</div>
 		)
 	}
