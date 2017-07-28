@@ -45,7 +45,7 @@ import store from './store.js';
 
 
 ReactDOM.render(<Provider store={store}>
-	<Layout appTitle='Shop' />
+	<Layout appTitle='Map' />
 </Provider>, document.getElementById('root'));
 
 	//https://www.youtube.com/watch?v=Td-2D-_7Y2E

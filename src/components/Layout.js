@@ -5,6 +5,7 @@ import { getUsersList } from '../actions/userActions.js'
 import { getAnimalsList } from '../actions/animalActions.js'
 import { getBikesList } from '../actions/bikesActions.js'
 
+import SelectabeList from './selectableList.js'
 
 import { Map } from 'react-arcgis';
 
@@ -38,16 +39,31 @@ class Layout extends React.Component {
 
 
 	}
-	render() {
-		console.log(this.props)
-		return (
+	componentWillMount() {
+		this.bikesList();
+	}
+	bikesList(){
+		this.props.dispatch(getBikesList());
+	}
 
-			<div>
+	render() {
+		const bikes = this.props.data.bikesData.list.map((item, i)=>{
+			return item;
+		})
+		return (
+			<div className="row">
 				<h1>{this.props.appTitle}</h1>
-				<button onClick={() => this.getUsers()}>get Users</button>
-				<Map style={{ width: '150px', height: '150px' }}
-					mapProperties={{ basemap: 'satellite' }} />
-			</div>
+				<div className="col-sm-2">					
+					<SelectabeList name='Bikes' list={bikes}/>
+				</div>
+				<div className="col-sm-10">
+					<Map style={{ width: '100%', height: '80vh' }}
+						mapProperties={{ basemap: 'gray' }} viewProperties={{
+							center: [-6.2603, 53.3498],
+							zoom: 12
+						}} />
+				</div>
+			</div >
 		)
 	}
 }
