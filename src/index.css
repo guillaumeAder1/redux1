@@ -49,3 +49,23 @@ ul {
 .game-info {
     margin-left: 20px;
 }
+
+.mapContainer,
+.listContainer {
+    height: 80vh;
+}
+
+.listContainer ul {
+    height: 80vh;
+    overflow-y: auto;
+    padding: 0px;
+}
+
+.listContainer li {
+    list-style-type: none;
+    margin-bottom: 5px;
+}
+
+#mapNode {
+    height: 100%;
+}

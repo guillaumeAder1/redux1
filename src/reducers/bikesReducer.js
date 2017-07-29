@@ -9,7 +9,7 @@ const defaultValues = {
 const bikesReducer = (state = defaultValues, action) => {
 	switch (action.type) {
 		case 'SELECT_STATION':
-			state = { ...state, selectedStation: [action.payload.station.position.lat,action.payload.station.position.lng]  }
+			state = { ...state, selectedStation: [action.payload.station.position.lng,action.payload.station.position.lat]  }
 			break;
 		case 'FETCH_BIKES':
 			state = { ...state, list: action.payload }

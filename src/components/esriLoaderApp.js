@@ -13,29 +13,34 @@ class EsriLoaderApp extends React.Component {
                 this.createMap();
             }
         }, {
-            // use a specific version instead of latest 4.x
+            // use a specific version instead of latest 4.x                
             url: 'https://js.arcgis.com/3.21/'
         })
     }
 
     createMap(){
+        const center = (this.props.station) ? this.props.station : [ -6.2603,53.3498];
         // first, we use Dojo's loader to require the map class
         EsriLoader.dojoRequire(['esri/map'], (Map) => {
             // create map with the given options at a DOM node w/ id 'mapNode'
-            let map = new Map('mapNode', {
-                center: [-118, 34.5],
-                zoom: 8,
+            this.map = new Map('mapNode', {
+                center: center,
+                zoom: 12,
                 basemap: 'dark-gray'
             });
         });
     }
-    
+    refreshMapView(){
+        if(!this.props.station){
+            return false;
+        }
+        this.map.centerAndZoom(this.props.station, 15)
+    }
 
     render(){
-        return (
-            <div>
-                <div id='mapNode'></div>
-            </div>
+        this.refreshMapView();
+        return (            
+                <div id='mapNode'></div>            
         )
     }
 

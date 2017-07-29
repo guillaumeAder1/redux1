@@ -3,5 +3,5 @@
     "window.zoomLevel": 0,
     "editor.formatOnSave": true,
     "editor.tabSize": 4,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": true
 }

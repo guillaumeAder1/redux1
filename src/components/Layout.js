@@ -57,7 +57,7 @@ class Layout extends React.Component {
 		return (
 			<div className="row">
 				<h1>{this.props.appTitle}</h1>
-				<div className="col-sm-2">
+				<div className="col-sm-2 listContainer">
 					<SelectabeList onSelect={this.onSelectList}  name='Dublin station' list={bikesList} />
 				</div>
 
@@ -67,11 +67,11 @@ class Layout extends React.Component {
 // 				</div>   
                 }
 
-                <div className="col-sm-10">
-                    <EsriLoaderApp/>
+                <div  className="col-sm-10 mapContainer">
+                    <EsriLoaderApp station={this.props.data.bikesData.selectedStation} list={this.props.data.bikesData.list}/>
                 </div>
 			               
-			</div >
+			</div>
 		)
 	}
 }

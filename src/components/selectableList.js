@@ -13,8 +13,7 @@ export default class SelectableList extends React.Component {
 			return <li key={i} onClick={() => this.selectStation(i)}>{item.address}</li>
 		});
 		return (
-			<div>
-				<h4>{this.props.name} list</h4>
+			<div>				
 				<ul>{bikes}</ul>
 			</div>
 		);
