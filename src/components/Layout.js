@@ -6,7 +6,8 @@ import { getAnimalsList } from '../actions/animalActions.js'
 import * as bikeActions from '../actions/bikesActions.js'
 
 import SelectabeList from './selectableList.js'
-import EsriMapComponent from './esriMap.js'
+import EsriLoaderApp from './esriLoaderApp.js'
+//import EsriMapComponent from './esriMap.js'
 
 
 // function mapStateToProps(state) {
@@ -59,9 +60,17 @@ class Layout extends React.Component {
 				<div className="col-sm-2">
 					<SelectabeList onSelect={this.onSelectList}  name='Dublin station' list={bikesList} />
 				</div>
-				<div className="col-sm-10">
-					<EsriMapComponent selection={this.props.data.bikesData.selectedStation} list={this.props.data.bikesData.list} />
-				</div>
+
+                {
+//  <div className="col-sm-10">
+// 					<EsriMapComponent selection={this.props.data.bikesData.selectedStation} list={this.props.data.bikesData.list} />
+// 				</div>   
+                }
+
+                <div className="col-sm-10">
+                    <EsriLoaderApp/>
+                </div>
+			               
 			</div >
 		)
 	}
