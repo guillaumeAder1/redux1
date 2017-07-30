@@ -3,38 +3,30 @@ import axios from 'axios';
 const APIkeyDublinBike = 'cd68da53009a674d943220ef0a67623682aa00ce';
 
 export function getBikesList() {
-	return function (dispatch) {
-		axios.get('https://api.jcdecaux.com/vls/v1/stations?contract=dublin&apiKey=' + APIkeyDublinBike)
-			.then((response) => {
-				dispatch({ type: 'FETCH_BIKES', payload: response.data })
-			})
-			.catch((err) => {
-				dispatch({ type: 'FETCH_BIKES_ERROR', payload: err })
-			});
+	return dispatch => {
+		return {
+			type: 'FETCHING_BIKES',
+			payload: axios.get('https://api.jcdecaux.com/vls/v1/stations?contract=dublin&apiKey=' + APIkeyDublinBike)
+
+		}
 	}
 }
 
-export function getDataCity(city) {
-	return function (dispatch) {
-		axios.get('https://api.jcdecaux.com/vls/v1/stations?contract=' + city + '&apiKey=' + APIkeyDublinBike)
-			.then((response) => {
-				dispatch({ type: 'FETCH_BIKES', payload: response.data })
-			})
-			.catch((err) => {
-				dispatch({ type: 'FETCH_BIKES_ERROR', payload: err })
-			});
+export function getDataCities() {
+	return dispatch => {
+		return {
+			type: 'FETCHING_CITIES',
+			payload: axios.get('https://api.jcdecaux.com/vls/v1/contracts?apiKey=' + APIkeyDublinBike)
+		}
 	}
 }
 
-export function getStationsList() {
-	return function (dispatch) {
-		axios.get('https://api.jcdecaux.com/vls/v1/contracts?apiKey=' + APIkeyDublinBike)
-			.then((response) => {
-				dispatch({ type: 'FETCH_CITIES', payload: response.data })
-			})
-			.catch((err) => {
-				dispatch({ type: 'FETCH_CITIES_ERROR', payload: err })
-			});
+export function getStationsList(city) {
+	return dispatch => {
+		return {
+			type: 'FETCHING_STATIONS',
+			payload: axios.get('https://api.jcdecaux.com/vls/v1/stations?contract=' + city + '&apiKey=' + APIkeyDublinBike)
+		}
 	}
 }
 export function selectStation(station) {

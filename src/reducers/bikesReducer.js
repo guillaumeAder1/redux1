@@ -3,31 +3,35 @@ const defaultValues = {
 	list: [], // list of stations
 	selectedCity: false,
 	selectedStation: false,
-	cities:[], // list of cities 
-	error: false
+	cities: [], // list of cities 
+	error: false,
+	fetchingData: false
 }
 
 const bikesReducer = (state = defaultValues, action) => {
 	switch (action.type) {
 		case 'SELECT_STATION':
-			const coord = [action.payload.station.position.lng,action.payload.station.position.lat];
-			state = { ...state, selectedStation:  coord };
+			const coord = [action.payload.station.position.lng, action.payload.station.position.lat];
+			state = { ...state, selectedStation: coord };
 			break;
-		case 'FETCH_BIKES':
-			state = { ...state, list: action.payload };
+		case 'FETCHING_BIKES_FULFILLED':
+			state = { ...state, list: action.payload.data }
 			break;
-		case 'SELECT_CITY':
-			state = { ...state, selectedCity: action.payload };
+		case 'FETCHING_BIKES':
+			state = { ...state, fetchingData: action.payload };
 			break;
-		case 'FETCH_BIKES_ERROR':
-			state = { ...state, error: action.payload };
+		case 'FETCHING_CITIES_FULFILLED':
+			state = { ...state, cities: action.payload.data };
 			break;
-		case 'FETCH_CITIES':
-			state = { ...state, cities: action.payload };
+		case 'FETCHING_STATIONS':
+			state = { ...state, fetchingData: true };
 			break;
-		case 'FETCH_CITIES_ERROR':
-			state = { ...state, error: action.payload };
+		case 'FETCHING_STATIONS_FULFILLED':
+			state = { ...state, list: action.payload.data };
 			break;
+
+
+
 		default:
 			break;
 	}

@@ -3,7 +3,7 @@ import * as  EsriLoader from 'esri-loader'
 
 class EsriLoaderApp extends React.Component {
 
-    componentWillMount(){
+    componentWillMount() {
         EsriLoader.bootstrap((err) => {
             if (err) {
                 // handle any loading errors
@@ -13,13 +13,13 @@ class EsriLoaderApp extends React.Component {
                 this.createMap();
             }
         }, {
-            // use a specific version instead of latest 4.x                
-            url: 'https://js.arcgis.com/3.21/'
-        })
+                // use a specific version instead of latest 4.x                
+                url: 'https://js.arcgis.com/3.21/'
+            })
     }
 
-    createMap(){
-        const center = (this.props.station) ? this.props.station : [ -6.2603,53.3498];
+    createMap() {
+        const center = (this.props.station) ? this.props.station : [-6.2603, 53.3498];
         // first, we use Dojo's loader to require the map class
         EsriLoader.dojoRequire(['esri/map'], (Map) => {
             // create map with the given options at a DOM node w/ id 'mapNode'
@@ -30,17 +30,17 @@ class EsriLoaderApp extends React.Component {
             });
         });
     }
-    refreshMapView(){
-        if(!this.props.station){
+    refreshMapView() {
+        if (!this.props.station) {
             return false;
         }
         this.map.centerAndZoom(this.props.station, 15)
     }
 
-    render(){
+    render() {
         this.refreshMapView();
-        return (            
-                <div id='mapNode'></div>            
+        return (
+            <div id='mapNode'></div>
         )
     }
 

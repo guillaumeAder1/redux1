@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 import { getUsersList } from '../actions/userActions.js'
 import { getAnimalsList } from '../actions/animalActions.js'
-import * as bikeActions from '../actions/bikesActions.js'
+import * as bikeActions from '../actions/bikesActions'
 
 import SelectabeList from './selectableList.js'
 import EsriLoaderApp from './esriLoaderApp.js'
@@ -25,14 +26,11 @@ import FilterData from './Filter.js'
 
 // export default connect(mapStateToProps, mapDispatchToProps)(MyApp);
 
-function mapStateToProps(state) {
-	console.log("STATE ::", state, this.props)
-	return { data: state }
-}
 
 
 
-class Layout extends React.Component {	
+
+class Layout extends React.Component {
 
 	getUsers() {
 		this.props.dispatch(getUsersList());
@@ -40,43 +38,65 @@ class Layout extends React.Component {
 	}
 	componentWillMount() {
 
-		this.props.dispatch(bikeActions.getStationsList());
-		console.log(Map)
-		this.bikesList();
+		// this.props.dispatch(bikeActions.getStationsList());
+		// console.log(Map)
+		this.props.getDataCities()
+		this.props.getBikeList()
+
+		// this.bikesList();
 	}
 	bikesList() {
-		this.props.dispatch(bikeActions.getBikesList());
+		// this.props.getBikeList()
 	}
-	onSelectList = (val) => {		
+	onSelectList = (val) => {
 		console.log(val);
 		this.props.dispatch(bikeActions.selectStation(val))
 	}
-	cityChanged(city){
+	cityChanged(city) {
 		console.log(city)
-		this.props.dispatch(bikeActions.getDataCity(city));
+		// this.props.dispatch(bikeActions.getDataCity(city));
+
+		this.props.getStationsList(city);
 	}
 
-	render() {		
+	render() {
 
-		const bikesList = this.props.data.bikesData.list.map((item, i) => {
+		const bikesList = this.props.bikes.list.map((item, i) => {
 			return item;
 		})
 		return (
 			<div className="row">
 				<h1>{this.props.appTitle}</h1>
-				<FilterData list={this.props.data.bikesData.cities} onUpdate={(value) => this.cityChanged(value)} />				
+				<FilterData list={this.props.bikes.cities} onUpdate={(value) => this.cityChanged(value)} />
 				<div className="col-sm-2 listContainer">
-					<SelectabeList onSelect={this.onSelectList}  name='Dublin station' list={bikesList} />
-				</div>          
+					<SelectabeList onSelect={this.onSelectList} name='Dublin station' list={bikesList} />
+				</div>
 
-                <div  className="col-sm-10 mapContainer">
-                    <EsriLoaderApp station={this.props.data.bikesData.selectedStation} list={this.props.data.bikesData.list}/>
-                </div>
-			               
+				<div className="col-sm-10 mapContainer">
+					<EsriLoaderApp station={this.props.bikes.selectedStation} list={this.props.bikes.list} />
+				</div>
+
 			</div>
 		)
 	}
 }
-export default connect(mapStateToProps)(Layout);
+
+function mapStateToProps(state) {
+	console.log("STATE ::", state, this.props)
+	return {
+		bikes: state.bikesData
+	}
+}
+
+function mapDispatchToProps(dispatch) {
+	console.log(bindActionCreators)
+	return bindActionCreators({
+		getBikeList: bikeActions.getBikesList(),
+		getStationsList: bikeActions.getStationsList(),
+		getDataCities: bikeActions.getDataCities()
+	}, dispatch);
+
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);
 
 //https://github.com/reactjs/react-redux/issues/1
