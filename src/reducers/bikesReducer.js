@@ -29,6 +29,9 @@ const bikesReducer = (state = defaultValues, action) => {
 		case 'FETCHING_STATIONS_FULFILLED':
 			state = { ...state, list: action.payload.data };
 			break;
+		case 'FETCHING_STATIONS_REJECTED':
+			state = { ...state, error: action.payload };
+			break;
 
 
 

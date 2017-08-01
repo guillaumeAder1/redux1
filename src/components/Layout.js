@@ -37,20 +37,16 @@ class Layout extends React.Component {
 		this.props.dispatch(getAnimalsList());
 	}
 	componentWillMount() {
-
-		// this.props.dispatch(bikeActions.getStationsList());
-		// console.log(Map)
-		this.props.getDataCities()
-		this.props.getBikeList()
-
-		// this.bikesList();
+		this.props.getDataCities();
+		this.props.getBikesList();
 	}
 	bikesList() {
 		// this.props.getBikeList()
 	}
 	onSelectList = (val) => {
 		console.log(val);
-		this.props.dispatch(bikeActions.selectStation(val))
+		//this.props.dispatch(bikeActions.selectStation(val))
+		this.props.selectStation(val)
 	}
 	cityChanged(city) {
 		console.log(city)
@@ -89,13 +85,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	console.log(bindActionCreators)
-	return bindActionCreators({
-		getBikeList: bikeActions.getBikesList(),
-		getStationsList: bikeActions.getStationsList(),
-		getDataCities: bikeActions.getDataCities()
-	}, dispatch);
-
+	return bindActionCreators(bikeActions, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);
 
