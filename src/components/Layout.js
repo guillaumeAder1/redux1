@@ -2,56 +2,28 @@ import React from 'react';
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-import { getUsersList } from '../actions/userActions.js'
-import { getAnimalsList } from '../actions/animalActions.js'
 import * as bikeActions from '../actions/bikesActions'
 
 import SelectabeList from './selectableList.js'
 import EsriLoaderApp from './esriLoaderApp.js'
 import FilterData from './Filter.js'
-//import EsriMapComponent from './esriMap.js'
-
-
-// function mapStateToProps(state) {
-// 	return { todos: state.todos };
-// }
-
-// function mapDispatchToProps(dispatch) {
-// 	return { actions: bindActionCreators(actionCreators, dispatch) };
-// }
-
-// class MyApp extends React.Component {
-// 	// ...define your main app here
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(MyApp);
-
-
-
 
 
 class Layout extends React.Component {
 
-	getUsers() {
-		this.props.dispatch(getUsersList());
-		this.props.dispatch(getAnimalsList());
-	}
 	componentWillMount() {
 		this.props.getDataCities();
-		this.props.getBikesList();
+		this.props.getStationsList('dublin');
+
 	}
 	bikesList() {
 		// this.props.getBikeList()
 	}
 	onSelectList = (val) => {
-		console.log(val);
-		//this.props.dispatch(bikeActions.selectStation(val))
 		this.props.selectStation(val)
 	}
 	cityChanged(city) {
 		console.log(city)
-		// this.props.dispatch(bikeActions.getDataCity(city));
-
 		this.props.getStationsList(city);
 	}
 
@@ -63,7 +35,7 @@ class Layout extends React.Component {
 		return (
 			<div className="row">
 				<h1>{this.props.appTitle}</h1>
-				<FilterData list={this.props.bikes.cities} onUpdate={(value) => this.cityChanged(value)} />
+				<FilterData list={this.props.bikes.cities} station={this.props.bikes.selectedStation} onUpdate={(value) => this.cityChanged(value)} />
 				<div className="col-sm-2 listContainer">
 					<SelectabeList onSelect={this.onSelectList} name='Dublin station' list={bikesList} />
 				</div>
@@ -78,12 +50,10 @@ class Layout extends React.Component {
 }
 
 function mapStateToProps(state) {
-	console.log("STATE ::", state, this.props)
 	return {
 		bikes: state.bikesData
 	}
 }
-
 function mapDispatchToProps(dispatch) {
 	return bindActionCreators(bikeActions, dispatch);
 }

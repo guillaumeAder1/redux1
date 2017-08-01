@@ -19,7 +19,7 @@ class EsriLoaderApp extends React.Component {
     }
 
     createMap() {
-        const center = (this.props.station) ? this.props.station : [-6.2603, 53.3498];
+        const center = (this.props.station.name) ? this.props.station.coord : [-6.2603, 53.3498];
         // first, we use Dojo's loader to require the map class
         EsriLoader.dojoRequire(['esri/map'], (Map) => {
             // create map with the given options at a DOM node w/ id 'mapNode'
@@ -34,7 +34,7 @@ class EsriLoaderApp extends React.Component {
         if (!this.props.station) {
             return false;
         }
-        this.map.centerAndZoom(this.props.station, 15)
+        this.map.centerAndZoom(this.props.station.coord, 15)
     }
 
     render() {
