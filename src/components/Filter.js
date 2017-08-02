@@ -7,6 +7,9 @@ class FilterData extends React.Component {
     }
     render() {
         const list = this.props.list.map((item, i) => {
+            // if (this.props.station.station.name == item.name) {
+            //     alert('<dfj></dfj>')
+            // }
             return (
                 <option key={i} value={item.name} checked>{item.name}</option>
             );

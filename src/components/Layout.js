@@ -14,11 +14,8 @@ class Layout extends React.Component {
 	componentWillMount() {
 		this.props.getDataCities();
 		this.props.getStationsList('dublin');
+	}
 
-	}
-	bikesList() {
-		// this.props.getBikeList()
-	}
 	onSelectList = (val) => {
 		this.props.selectStation(val)
 	}
